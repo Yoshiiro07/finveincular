@@ -1,75 +1,75 @@
 -- Tabela de Bancos (para padronizar os bancos de financiamento)
-CREATE TABLE Bancos (
-    IDBanco INTEGER PRIMARY KEY AUTOINCREMENT,
-    NomeBanco TEXT NOT NULL UNIQUE
+CREATE TABLE bancos (
+    id_banco INTEGER PRIMARY KEY AUTOINCREMENT,
+    nome_banco TEXT NOT NULL UNIQUE
 );
 
 -- Tabela de Clientes
-CREATE TABLE Clientes (
-    CPF TEXT PRIMARY KEY,
-    Nome TEXT NOT NULL,
-    DataNascimento DATE NOT NULL,
-    EstaEmFinanciamento BOOLEAN NOT NULL,
-    DataCompra DATE,
-    IDBanco INTEGER,
-    TipoFinanciamento TEXT,
-    QuantidadeParcelas INTEGER CHECK(QuantidadeParcelas >= 0),
-    FOREIGN KEY (IDBanco) REFERENCES Bancos(IDBanco)
+CREATE TABLE clientes (
+    cpf TEXT PRIMARY KEY,
+    nome TEXT NOT NULL,
+    data_nascimento DATE NOT NULL,
+    esta_em_financiamento BOOLEAN NOT NULL,
+    data_compra DATE,
+    id_banco INTEGER,
+    tipo_financiamento TEXT,
+    quantidade_parcelas INTEGER CHECK(quantidade_parcelas >= 0),
+    FOREIGN KEY (id_banco) REFERENCES bancos(id_banco)
 );
 
 -- Tabela de Funcionários
-CREATE TABLE Funcionarios (
-    Matricula INTEGER PRIMARY KEY,
-    NomeFuncionario TEXT NOT NULL,
-    DataNascimento DATE NOT NULL,
-    DataContratacao DATE NOT NULL,
-    QuantidadeVeiculosVendidos INTEGER DEFAULT 0 CHECK(QuantidadeVeiculosVendidos >= 0),
-    EnderecoLoja TEXT NOT NULL
+CREATE TABLE funcionarios (
+    matricula INTEGER PRIMARY KEY,
+    nome_funcionario TEXT NOT NULL,
+    data_nascimento DATE NOT NULL,
+    data_contratacao DATE NOT NULL,
+    quantidade_veiculos_vendidos INTEGER DEFAULT 0 CHECK(quantidade_veiculos_vendidos >= 0),
+    endereco_loja TEXT NOT NULL
 );
 
 -- Tabela de Veículos
-CREATE TABLE Veiculos (
-    IDVeiculo INTEGER PRIMARY KEY AUTOINCREMENT,
-    NomeCarro TEXT NOT NULL,
-    Preco REAL NOT NULL CHECK(Preco > 0),
-    AnoCarro INTEGER NOT NULL,
-    TipoModelo TEXT NOT NULL,
-    QuantidadeVendida INTEGER DEFAULT 0 CHECK(QuantidadeVendida >= 0),
-    Kilometragem REAL CHECK(Kilometragem >= 0),
-    Cor TEXT,
-    Marca TEXT,
-    EstadoVeiculo TEXT CHECK(EstadoVeiculo IN ('Novo', 'Usado', 'Seminovo'))
+CREATE TABLE veiculos (
+    id_veiculo INTEGER PRIMARY KEY AUTOINCREMENT,
+    nome_carro TEXT NOT NULL,
+    preco REAL NOT NULL CHECK(preco > 0),
+    ano_carro INTEGER NOT NULL,
+    tipo_modelo TEXT NOT NULL,
+    quantidade_vendida INTEGER DEFAULT 0 CHECK(quantidade_vendida >= 0),
+    kilometragem REAL CHECK(kilometragem >= 0),
+    cor TEXT,
+    marca TEXT,
+    estado_veiculo TEXT CHECK(estado_veiculo IN ('Novo', 'Usado', 'Seminovo'))
 );
 
 -- Tabela de Financiamentos
-CREATE TABLE Financiamentos (
-    IDFinanciamento INTEGER PRIMARY KEY AUTOINCREMENT,
-    CPFCliente TEXT,
-    DiaFinanciamento DATE NOT NULL,
-    ValorTotal REAL NOT NULL CHECK(ValorTotal > 0),
-    ValorPrestacoes REAL NOT NULL CHECK(ValorPrestacoes > 0),
-    Loja TEXT NOT NULL,
-    FormaFinanciamento TEXT,
-    IDBanco INTEGER,
-    FOREIGN KEY (CPFCliente) REFERENCES Clientes(CPF),
-    FOREIGN KEY (IDBanco) REFERENCES Bancos(IDBanco)
+CREATE TABLE financiamentos (
+    id_financiamento INTEGER PRIMARY KEY AUTOINCREMENT,
+    cpf_cliente TEXT,
+    dia_financiamento DATE NOT NULL,
+    valor_total REAL NOT NULL CHECK(valor_total > 0),
+    valor_prestacoes REAL NOT NULL CHECK(valor_prestacoes > 0),
+    loja TEXT NOT NULL,
+    forma_financiamento TEXT,
+    id_banco INTEGER,
+    FOREIGN KEY (cpf_cliente) REFERENCES clientes(cpf),
+    FOREIGN KEY (id_banco) REFERENCES bancos(id_banco)
 );
 
 -- Tabela de Histórico de Vendas
-CREATE TABLE HistoricoVendas (
-    IDVenda INTEGER PRIMARY KEY AUTOINCREMENT,
-    CPFCliente TEXT,
-    MatriculaFuncionario INTEGER,
-    IDVeiculo INTEGER,
-    DataVenda DATE NOT NULL,
-    FOREIGN KEY (CPFCliente) REFERENCES Clientes(CPF),
-    FOREIGN KEY (MatriculaFuncionario) REFERENCES Funcionarios(Matricula),
-    FOREIGN KEY (IDVeiculo) REFERENCES Veiculos(IDVeiculo)
+CREATE TABLE historico_vendas (
+    id_venda INTEGER PRIMARY KEY AUTOINCREMENT,
+    cpf_cliente TEXT,
+    matricula_funcionario INTEGER,
+    id_veiculo INTEGER,
+    data_venda DATE NOT NULL,
+    FOREIGN KEY (cpf_cliente) REFERENCES clientes(cpf),
+    FOREIGN KEY (matricula_funcionario) REFERENCES funcionarios(matricula),
+    FOREIGN KEY (id_veiculo) REFERENCES veiculos(id_veiculo)
 );
 
 -- Índices para melhorar o desempenho em consultas
-CREATE INDEX idx_clientes_cpf ON Clientes(CPF);
-CREATE INDEX idx_funcionarios_matricula ON Funcionarios(Matricula);
-CREATE INDEX idx_veiculos_nome ON Veiculos(NomeCarro);
-CREATE INDEX idx_financiamentos_cpf ON Financiamentos(CPFCliente);
-CREATE INDEX idx_vendas_data ON HistoricoVendas(DataVenda);
+CREATE INDEX idx_clientes_cpf ON clientes(cpf);
+CREATE INDEX idx_funcionarios_matricula ON funcionarios(matricula);
+CREATE INDEX idx_veiculos_nome ON veiculos(nome_carro);
+CREATE INDEX idx_financiamentos_cpf ON financiamentos(cpf_cliente);
+CREATE INDEX idx_vendas_data ON historico_vendas(data_venda);

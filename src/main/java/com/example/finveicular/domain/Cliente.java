@@ -5,37 +5,41 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.Column;
+import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-@Table(name = "Clientes")
+@Table(name = "clientes")
+@Data
 public class Cliente {
 
     @Id
-    @Column(name = "CPF", nullable = false)
+    @Column(name = "cpf", nullable = false)
     private String cpf;
 
-    @Column(name = "Nome", nullable = false)
+    @Column(name = "nome", nullable = false)
     private String nome;
 
-    @Column(name = "DataNascimento", nullable = false)
+    @Column(name = "data_nascimento", nullable = false)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dataNascimento;
 
-    @Column(name = "EstaEmFinanciamento", nullable = false)
+    @Column(name = "esta_em_financiamento", nullable = false)
     private boolean estaEmFinanciamento;
 
-    @Column(name = "DataCompra")
+    @Column(name = "data_compra")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dataCompra;
 
-    @Column(name = "IDBanco")
+    @Column(name = "id_banco")
     private Integer idBanco;
 
-    @Column(name = "TipoFinanciamento")
+    @Column(name = "tipo_financiamento")
     private String tipoFinanciamento;
 
-    @Column(name = "QuantidadeParcelas")
+    @Column(name = "quantidade_parcelas")
     private Integer quantidadeParcelas;
 
-    // Getters and Setters
     public String getCpf() {
         return cpf;
     }
