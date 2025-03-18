@@ -1,7 +1,10 @@
 package com.example.finveicular.domain;
 
-import javax.persistence.*;
 import java.time.LocalDate;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.Column;
 
 @Entity
 @Table(name = "Clientes")
