@@ -1,11 +1,11 @@
 -- Tabela de Bancos (para padronizar os bancos de financiamento)
-CREATE TABLE bancos (
+CREATE TABLE Bancos (
     id_banco INTEGER PRIMARY KEY AUTOINCREMENT,
     nome_banco TEXT NOT NULL UNIQUE
 );
 
 -- Tabela de Clientes
-CREATE TABLE clientes (
+CREATE TABLE Clientes (
     cpf TEXT PRIMARY KEY,
     nome TEXT NOT NULL,
     data_nascimento DATE NOT NULL,
@@ -18,7 +18,7 @@ CREATE TABLE clientes (
 );
 
 -- Tabela de Funcionários
-CREATE TABLE funcionarios (
+CREATE TABLE Funcionarios (
     matricula INTEGER PRIMARY KEY,
     nome_funcionario TEXT NOT NULL,
     data_nascimento DATE NOT NULL,
@@ -28,7 +28,7 @@ CREATE TABLE funcionarios (
 );
 
 -- Tabela de Veículos
-CREATE TABLE veiculos (
+CREATE TABLE Veiculos (
     id_veiculo INTEGER PRIMARY KEY AUTOINCREMENT,
     nome_carro TEXT NOT NULL,
     preco REAL NOT NULL CHECK(preco > 0),
@@ -42,7 +42,7 @@ CREATE TABLE veiculos (
 );
 
 -- Tabela de Financiamentos
-CREATE TABLE financiamentos (
+CREATE TABLE Financiamentos (
     id_financiamento INTEGER PRIMARY KEY AUTOINCREMENT,
     cpf_cliente TEXT,
     dia_financiamento DATE NOT NULL,
@@ -56,7 +56,7 @@ CREATE TABLE financiamentos (
 );
 
 -- Tabela de Histórico de Vendas
-CREATE TABLE historico_vendas (
+CREATE TABLE Historico_Vendas (
     id_venda INTEGER PRIMARY KEY AUTOINCREMENT,
     cpf_cliente TEXT,
     matricula_funcionario INTEGER,
@@ -68,8 +68,8 @@ CREATE TABLE historico_vendas (
 );
 
 -- Índices para melhorar o desempenho em consultas
-CREATE INDEX idx_clientes_cpf ON clientes(cpf);
-CREATE INDEX idx_funcionarios_matricula ON funcionarios(matricula);
-CREATE INDEX idx_veiculos_nome ON veiculos(nome_carro);
-CREATE INDEX idx_financiamentos_cpf ON financiamentos(cpf_cliente);
-CREATE INDEX idx_vendas_data ON historico_vendas(data_venda);
+CREATE INDEX idx_clientes_cpf ON Clientes(cpf);
+CREATE INDEX idx_funcionarios_matricula ON Funcionarios(matricula);
+CREATE INDEX idx_veiculos_nome ON Veiculos(nome_carro);
+CREATE INDEX idx_financiamentos_cpf ON Financiamentos(cpf_cliente);
+CREATE INDEX idx_vendas_data ON Historico_Vendas(data_venda);

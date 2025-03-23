@@ -8,21 +8,28 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 
-import com.example.finveicular.application.ClienteService;
+import com.example.finveicular.application.PessoalService;
+import com.example.finveicular.domain.Funcionarios;
 
 @RestController
 @RequestMapping("/api/clientes")
-public class ClienteController {
+public class PessoalController {
 
-    private final ClienteService clienteService;
+    private final PessoalService pessoalService;
 
     @Autowired
-    public ClienteController(ClienteService clienteService) {
-        this.clienteService = clienteService;
+    public PessoalController(PessoalService pessoalService) {
+        this.pessoalService = pessoalService;
     }
 
     @GetMapping("/{cpf}/nome")
     public String getClienteNome(@PathVariable String cpf) {
-        return clienteService.getClienteNome(cpf);
+        return pessoalService.getClienteNome(cpf);
     }
+
+    @GetMapping("/top-vendedor")
+    public Funcionarios getTopVendedor() {
+        return pessoalService.getFuncionarioComMaisVeiculosVendidos();
+    }
+
 }
